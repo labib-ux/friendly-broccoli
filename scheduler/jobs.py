@@ -45,6 +45,20 @@ def run_trading_cycle(
         day_start_value: Day's starting portfolio used for daily drawdown logic.
     """
     try:
+        import json
+        try:
+            with open("bot_control.json", "r") as f:
+                control = json.load(f)
+            if control.get("paused", False):
+                logger.info("Trading cycle skipped — bot is paused via dashboard.")
+                return
+        except FileNotFoundError:
+            pass  # No control file means bot is running normally.
+        except Exception as e:
+            logger.warning(
+                "Could not read bot_control.json: %s — "
+                "proceeding with trading cycle as normal.", e)
+            
         # STEP 1 — Fetch raw OHLCV data
         # +50 bars for indicator warmup period
         df = fetch_historical_data(adapter, symbol, timeframe, limit=lookback_window + 50)
