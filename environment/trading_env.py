@@ -45,14 +45,15 @@ class TradingEnvironment(gym.Env):
             ValueError: If the input data contains NaN or infinite values in feature columns.
         """
         # Input validation MUST run before anything else
+        assert isinstance(df, pd.DataFrame), "df must be a pandas DataFrame"
         is_na = df[FEATURE_COLUMNS].isna().any()
         is_inf = df[FEATURE_COLUMNS].isin([np.inf, -np.inf]).any()
         if is_na.any() or is_inf.any():
             bad_cols = [col for col in FEATURE_COLUMNS if is_na[col] or is_inf[col]]
             raise ValueError(f"DataFrame contains NaN or infinite values in columns: {bad_cols}")
 
-        self.df = df
-        self.initial_capital = initial_capital
+        self.df = df.reset_index(drop=True)
+        self.initial_capital = float(initial_capital)
         self.lookback_window = lookback_window
         self.render_mode = render_mode
 
@@ -123,15 +124,23 @@ class TradingEnvironment(gym.Env):
         Raises:
             AssertionError: If generated observation contains NaN or infinite values.
         """
+        safe_step = min(self.current_step, len(self.df) - 1)
+        
         window = self.df[self.feature_columns].iloc[
-            self.current_step - self.lookback_window : self.current_step
+            max(0, safe_step - self.lookback_window) : safe_step
         ].values.flatten()
-
+        
+        # Pad with zeros if we don't have enough history
+        # (This usually only happens on the very first few steps after reset)
+        expected_size = self.lookback_window * len(self.feature_columns)
+        if len(window) < expected_size:
+            window = np.pad(window, (expected_size - len(window), 0), 'constant')
+            
         capital_ratio = self.current_capital / self.initial_capital
         position_held = 1.0 if self.position_size > 0 else 0.0
 
         if self.position_size > 0:
-            current_price = float(self.df['close'].iloc[self.current_step])
+            current_price = float(self.df['close'].iloc[safe_step])
             unrealized_pnl_pct = (current_price - self.entry_price) / self.entry_price
         else:
             unrealized_pnl_pct = 0.0

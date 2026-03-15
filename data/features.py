@@ -97,9 +97,9 @@ def scale_features(df: pd.DataFrame, scaler: Optional[MinMaxScaler] = None) -> T
         scaler = MinMaxScaler()
         df[FEATURE_COLUMNS] = scaler.fit_transform(df[FEATURE_COLUMNS])
         
-        # Save fitted scaler to disk at MODEL_SAVE_PATH/feature_scaler.pkl
-        os.makedirs(MODEL_SAVE_PATH, exist_ok=True)
-        scaler_file = os.path.join(MODEL_SAVE_PATH, "feature_scaler.pkl")
+        # Save fitted scaler to disk at os.path.dirname(MODEL_SAVE_PATH)/feature_scaler.pkl
+        os.makedirs(os.path.dirname(MODEL_SAVE_PATH), exist_ok=True)
+        scaler_file = os.path.join(os.path.dirname(MODEL_SAVE_PATH), "feature_scaler.pkl")
         try:
             joblib.dump(scaler, scaler_file)
             logger.info(f"Fitted scaler successfully saved to {scaler_file}")
