@@ -1,0 +1,1246 @@
+{
+  "config.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "os",
+        "line": 10
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "dotenv",
+        "name": "load_dotenv",
+        "line": 12
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "_get_env",
+      "_validate_config",
+      "value"
+    ]
+  },
+  "main.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "time",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "sys",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "apscheduler.schedulers.background",
+        "name": "BackgroundScheduler",
+        "line": 4
+      },
+      {
+        "type": "from",
+        "module": "apscheduler.events",
+        "name": "EVENT_JOB_ERROR",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "apscheduler.events",
+        "name": "EVENT_JOB_EXECUTED",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "DB_PATH",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "MODEL_SAVE_PATH",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "INITIAL_CAPITAL",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "LOG_LEVEL",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "init_db",
+        "line": 13
+      },
+      {
+        "type": "from",
+        "module": "adapters.alpaca_adapter",
+        "name": "AlpacaAdapter",
+        "line": 14
+      },
+      {
+        "type": "from",
+        "module": "risk.manager",
+        "name": "RiskManager",
+        "line": 15
+      },
+      {
+        "type": "from",
+        "module": "agent.trainer",
+        "name": "TradingAgent",
+        "line": 16
+      },
+      {
+        "type": "from",
+        "module": "scheduler.jobs",
+        "name": "run_trading_cycle",
+        "line": 17
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "SessionLocal",
+      "adapter",
+      "risk_manager",
+      "agent",
+      "daily_state",
+      "scheduler",
+      "on_job_error",
+      "on_job_success"
+    ]
+  },
+  "database/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "init_db",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "log_trade",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "log_decision",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "get_trade_history",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "get_pnl_summary",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "Trade",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "logger",
+        "name": "AgentDecision",
+        "line": 8
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "database/logger.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "statistics",
+        "line": 2
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "datetime",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "timezone",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy",
+        "name": "create_engine",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy",
+        "name": "String",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy",
+        "name": "Float",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy",
+        "name": "Integer",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy",
+        "name": "DateTime",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy.orm",
+        "name": "DeclarativeBase",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy.orm",
+        "name": "Mapped",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy.orm",
+        "name": "mapped_column",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy.orm",
+        "name": "sessionmaker",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "sqlalchemy.orm",
+        "name": "Session",
+        "line": 6
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "Base",
+      "Trade",
+      "AgentDecision",
+      "init_db",
+      "log_trade",
+      "log_decision",
+      "get_trade_history",
+      "get_pnl_summary",
+      "__tablename__",
+      "__tablename__",
+      "engine",
+      "SessionLocal",
+      "trade",
+      "decision",
+      "connection_url",
+      "connection_url",
+      "results",
+      "trades",
+      "total_trades",
+      "winning_trades",
+      "win_rate",
+      "total_pnl",
+      "avg_pnl",
+      "pnl_values",
+      "mean_pnl",
+      "std_pnl",
+      "sharpe",
+      "sharpe"
+    ]
+  },
+  "scheduler/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "jobs",
+        "name": "run_trading_cycle",
+        "line": 9
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "scheduler/jobs.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "os",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "joblib",
+        "line": 3
+      },
+      {
+        "type": "import",
+        "module": "numpy",
+        "line": 4
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "datetime",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "timezone",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "data.fetcher",
+        "name": "fetch_historical_data",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "data.features",
+        "name": "compute_features",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "data.features",
+        "name": "scale_features",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "data.features",
+        "name": "FEATURE_COLUMNS",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "log_trade",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "log_decision",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "MODEL_SAVE_PATH",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "INITIAL_CAPITAL",
+        "line": 11
+      },
+      {
+        "type": "import",
+        "module": "json",
+        "line": 48
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "run_trading_cycle",
+      "df",
+      "df",
+      "df",
+      "scaler_path",
+      "port",
+      "current_price",
+      "window_flat",
+      "capital_ratio",
+      "position_qty",
+      "entry_price",
+      "position_held",
+      "unrealized_pnl_pct",
+      "obs",
+      "action",
+      "scaler",
+      "control",
+      "position_qty",
+      "entry_price",
+      "position_held",
+      "size",
+      "order",
+      "order",
+      "realized_pnl"
+    ]
+  },
+  "agent/policy.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "torch",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "torch.nn",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "gymnasium",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "stable_baselines3.common.torch_layers",
+        "name": "BaseFeaturesExtractor",
+        "line": 4
+      }
+    ],
+    "defined_names": [
+      "CustomFeatureExtractor",
+      "__init__",
+      "forward",
+      "input_dim"
+    ]
+  },
+  "agent/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "policy",
+        "name": "CustomFeatureExtractor",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "trainer",
+        "name": "TradingAgent",
+        "line": 9
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "agent/trainer.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "os",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "numpy",
+        "line": 3
+      },
+      {
+        "type": "import",
+        "module": "torch",
+        "line": 4
+      },
+      {
+        "type": "from",
+        "module": "stable_baselines3",
+        "name": "PPO",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "stable_baselines3.common.callbacks",
+        "name": "BaseCallback",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "stable_baselines3.common.callbacks",
+        "name": "EvalCallback",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "agent.policy",
+        "name": "CustomFeatureExtractor",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "MODEL_SAVE_PATH",
+        "line": 10
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "TradingAgent",
+      "__init__",
+      "train",
+      "predict",
+      "save",
+      "policy_kwargs"
+    ]
+  },
+  "dashboard/__init__.py": {
+    "imports": [],
+    "defined_names": []
+  },
+  "dashboard/app.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "json",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "time",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 3
+      },
+      {
+        "type": "import",
+        "module": "streamlit",
+        "line": 4
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 5
+      },
+      {
+        "type": "import",
+        "module": "plotly.express",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "init_db",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "get_trade_history",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "database.logger",
+        "name": "get_pnl_summary",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "DB_PATH",
+        "line": 10
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "CONTROL_FILE",
+      "get_db_sessionmaker",
+      "main",
+      "SessionLocal",
+      "is_paused",
+      "summary",
+      "trades",
+      "df",
+      "df",
+      "fig1",
+      "sell_trades",
+      "display_df",
+      "auto_refresh",
+      "control_state",
+      "control_state",
+      "control_state",
+      "fig2"
+    ]
+  },
+  "adapters/binance_adapter.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "abc",
+        "name": "ABC",
+        "line": 1
+      },
+      {
+        "type": "from",
+        "module": "abc",
+        "name": "abstractmethod",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 2
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "adapters.base_adapter",
+        "name": "BaseAdapter",
+        "line": 4
+      }
+    ],
+    "defined_names": [
+      "BinanceAdapter",
+      "get_ohlcv",
+      "get_portfolio",
+      "submit_order",
+      "get_current_price",
+      "cancel_all_orders",
+      "is_market_open",
+      "get_positions"
+    ]
+  },
+  "adapters/polymarket_adapter.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "requests",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "datetime",
+        "line": 4
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "timezone",
+        "line": 4
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "py_clob_client.client",
+        "name": "ClobClient",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "py_clob_client.credentials",
+        "name": "ApiCreds",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "POLYMARKET_API_KEY",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "POLYMARKET_PRIVATE_KEY",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "adapters.base_adapter",
+        "name": "BaseAdapter",
+        "line": 9
+      }
+    ],
+    "defined_names": [
+      "POLYMARKET_HOST",
+      "GAMMA_API_BASE",
+      "POLYGON_CHAIN_ID",
+      "REQUEST_TIMEOUT",
+      "MAX_TRADES_FETCH",
+      "PolymarketAdapter",
+      "__init__",
+      "get_ohlcv",
+      "get_portfolio",
+      "submit_order",
+      "get_current_price",
+      "cancel_all_orders",
+      "is_market_open",
+      "get_positions",
+      "get_market_odds",
+      "get_active_markets",
+      "creds",
+      "timeframe_map",
+      "rule",
+      "url",
+      "response",
+      "history",
+      "history_records",
+      "price_df",
+      "trades",
+      "trade_records",
+      "trades_df",
+      "final_df",
+      "final_df",
+      "usdc_balance",
+      "positions",
+      "position_value",
+      "side_str",
+      "price",
+      "order_args",
+      "order",
+      "resp",
+      "orders",
+      "positions",
+      "order_book",
+      "best_ask",
+      "url",
+      "params",
+      "response",
+      "markets",
+      "result",
+      "keyword_lower",
+      "price_df",
+      "price_ohlc",
+      "price_ohlc",
+      "price_ohlc",
+      "trades_df",
+      "volume_sum",
+      "volume_sum",
+      "volume_sum",
+      "bal",
+      "question",
+      "usdc_balance",
+      "usdc_balance"
+    ]
+  },
+  "adapters/alpaca_adapter.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 2
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "datetime",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "datetime",
+        "name": "timedelta",
+        "line": 3
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 4
+      },
+      {
+        "type": "from",
+        "module": "alpaca.trading.client",
+        "name": "TradingClient",
+        "line": 5
+      },
+      {
+        "type": "from",
+        "module": "alpaca.data.historical",
+        "name": "CryptoHistoricalDataClient",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "alpaca.data.requests",
+        "name": "CryptoBarsRequest",
+        "line": 7
+      },
+      {
+        "type": "from",
+        "module": "alpaca.data.timeframe",
+        "name": "TimeFrame",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "alpaca.data.timeframe",
+        "name": "TimeFrameUnit",
+        "line": 8
+      },
+      {
+        "type": "from",
+        "module": "alpaca.trading.requests",
+        "name": "MarketOrderRequest",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "alpaca.trading.enums",
+        "name": "OrderSide",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "alpaca.trading.enums",
+        "name": "TimeInForce",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "ALPACA_API_KEY",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "ALPACA_SECRET_KEY",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "ALPACA_BASE_URL",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "adapters.base_adapter",
+        "name": "BaseAdapter",
+        "line": 12
+      }
+    ],
+    "defined_names": [
+      "AlpacaAdapter",
+      "__init__",
+      "get_ohlcv",
+      "get_portfolio",
+      "submit_order",
+      "get_current_price",
+      "cancel_all_orders",
+      "is_market_open",
+      "get_positions",
+      "paper",
+      "start_time",
+      "request",
+      "bars",
+      "df",
+      "df",
+      "df",
+      "df",
+      "df",
+      "account",
+      "side_enum",
+      "request",
+      "order",
+      "start_time",
+      "request",
+      "bars",
+      "df",
+      "positions",
+      "tf",
+      "delta",
+      "tf",
+      "delta",
+      "tf",
+      "delta",
+      "tf",
+      "delta",
+      "tf",
+      "delta"
+    ]
+  },
+  "adapters/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "base_adapter",
+        "name": "BaseAdapter",
+        "line": 9
+      },
+      {
+        "type": "from",
+        "module": "alpaca_adapter",
+        "name": "AlpacaAdapter",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "polymarket_adapter",
+        "name": "PolymarketAdapter",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "binance_adapter",
+        "name": "BinanceAdapter",
+        "line": 12
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "adapters/base_adapter.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "abc",
+        "name": "ABC",
+        "line": 1
+      },
+      {
+        "type": "from",
+        "module": "abc",
+        "name": "abstractmethod",
+        "line": 1
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 2
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 3
+      }
+    ],
+    "defined_names": [
+      "BaseAdapter",
+      "get_ohlcv",
+      "get_portfolio",
+      "submit_order",
+      "get_current_price",
+      "cancel_all_orders",
+      "is_market_open",
+      "get_positions"
+    ]
+  },
+  "environment/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "trading_env",
+        "name": "TradingEnvironment",
+        "line": 10
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "environment/trading_env.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 1
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 2
+      },
+      {
+        "type": "import",
+        "module": "gymnasium",
+        "line": 4
+      },
+      {
+        "type": "import",
+        "module": "numpy",
+        "line": 5
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "data.features",
+        "name": "FEATURE_COLUMNS",
+        "line": 8
+      }
+    ],
+    "defined_names": [
+      "COMMISSION_RATE",
+      "DRAWDOWN_THRESHOLD",
+      "PENALTY_MULTIPLIER",
+      "SHARPE_WINDOW",
+      "RUIN_THRESHOLD",
+      "TradingEnvironment",
+      "metadata",
+      "__init__",
+      "reset",
+      "_get_observation",
+      "step",
+      "render",
+      "close",
+      "is_na",
+      "is_inf",
+      "n_features",
+      "observation",
+      "window",
+      "capital_ratio",
+      "position_held",
+      "obs",
+      "current_price",
+      "step_reward",
+      "drawdown",
+      "recent_rewards",
+      "reward",
+      "terminated",
+      "info",
+      "bad_cols",
+      "current_price",
+      "unrealized_pnl_pct",
+      "unrealized_pnl_pct",
+      "step_reward",
+      "sale_value",
+      "realized_pnl",
+      "step_reward",
+      "step_reward"
+    ]
+  },
+  "data/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "features",
+        "name": "FEATURE_COLUMNS",
+        "line": 5
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "data/features.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "os",
+        "line": 5
+      },
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 6
+      },
+      {
+        "type": "import",
+        "module": "joblib",
+        "line": 7
+      },
+      {
+        "type": "import",
+        "module": "numpy",
+        "line": 8
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 9
+      },
+      {
+        "type": "import",
+        "module": "pandas_ta",
+        "line": 10
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Tuple",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Optional",
+        "line": 11
+      },
+      {
+        "type": "from",
+        "module": "sklearn.preprocessing",
+        "name": "MinMaxScaler",
+        "line": 12
+      },
+      {
+        "type": "from",
+        "module": "config",
+        "name": "MODEL_SAVE_PATH",
+        "line": 14
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "FEATURE_COLUMNS",
+      "engineer_features",
+      "scale_features",
+      "rename_cols",
+      "drop_cols",
+      "missing_cols",
+      "scaler",
+      "scaler_file",
+      "null_cols"
+    ]
+  },
+  "data/fetcher.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 5
+      },
+      {
+        "type": "import",
+        "module": "pandas",
+        "line": 6
+      },
+      {
+        "type": "from",
+        "module": "typing",
+        "name": "Any",
+        "line": 7
+      }
+    ],
+    "defined_names": [
+      "logger",
+      "fetch_historical_data",
+      "required_columns",
+      "df_cols_lower",
+      "df"
+    ]
+  },
+  "risk/__init__.py": {
+    "imports": [
+      {
+        "type": "from",
+        "module": "manager",
+        "name": "RiskManager",
+        "line": 9
+      }
+    ],
+    "defined_names": [
+      "__all__"
+    ]
+  },
+  "risk/manager.py": {
+    "imports": [
+      {
+        "type": "import",
+        "module": "logging",
+        "line": 1
+      }
+    ],
+    "defined_names": [
+      "RiskManager",
+      "__init__",
+      "calculate_position_size",
+      "kelly_size",
+      "check_circuit_breaker",
+      "should_stop_loss",
+      "size",
+      "kelly",
+      "half_kelly",
+      "size",
+      "drawdown"
+    ]
+  }
+}

@@ -7,7 +7,7 @@ import logging
 import joblib
 import numpy as np
 import pandas as pd
-import pandas_ta as ta
+import ta
 from typing import Tuple, Optional
 from sklearn.preprocessing import MinMaxScaler
 
@@ -36,45 +36,27 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     # Optional: ensure columns are easily accessible
     # Assumes standard open, high, low, close, volume names
     
-    # STEP 1: Compute indicators using pandas-ta
-    df.ta.rsi(length=14, append=True)
-    df.ta.macd(fast=12, slow=26, signal=9, append=True)
-    df.ta.bbands(length=20, std=2.0, append=True)
-    df.ta.ema(length=9, append=True)
-    df.ta.ema(length=21, append=True)
+    # STEP 1: Compute indicators using ta
+    df['rsi'] = ta.momentum.RSIIndicator(df['close'], window=14).rsi()
     
-    # SMA of volume column(length=20)
-    # Using pandas-ta sma on the volume column
-    if 'volume' in df.columns:
-        df['volume_sma20'] = ta.sma(df['volume'], length=20)
-    elif 'Volume' in df.columns:
-        df['volume_sma20'] = ta.sma(df['Volume'], length=20)
+    macd = ta.trend.MACD(df['close'], window_slow=26, window_fast=12, window_sign=9)
+    df['macd_line']   = macd.macd()
+    df['macd_signal'] = macd.macd_signal()
+    df['macd_hist']   = macd.macd_diff()
+    
+    bb = ta.volatility.BollingerBands(df['close'], window=20, window_dev=2)
+    df['bb_upper'] = bb.bollinger_hband()
+    df['bb_mid']   = bb.bollinger_mavg()
+    df['bb_lower'] = bb.bollinger_lband()
+    
+    df['ema9'] = ta.trend.EMAIndicator(df['close'], window=9).ema_indicator()
+    df['ema21'] = ta.trend.EMAIndicator(df['close'], window=21).ema_indicator()
+    
+    df['volume_sma20'] = df['volume'].rolling(window=20).mean()
     
     # Custom percentage changes
-    if 'close' in df.columns:
-        df['price_change_pct'] = df['close'].pct_change()
-        df['high_low_range_pct'] = (df['high'] - df['low']) / df['low']
-    elif 'Close' in df.columns:
-        df['price_change_pct'] = df['Close'].pct_change()
-        df['high_low_range_pct'] = (df['High'] - df['Low']) / df['Low']
-
-    # STEP 2: Rename all pandas-ta output columns to clean names
-    rename_cols = {
-        'RSI_14': 'rsi',
-        'MACD_12_26_9': 'macd_line',
-        'MACDh_12_26_9': 'macd_hist',
-        'MACDs_12_26_9': 'macd_signal',
-        'BBL_20_2.0': 'bb_lower',
-        'BBM_20_2.0': 'bb_mid',
-        'BBU_20_2.0': 'bb_upper',
-        'EMA_9': 'ema9',
-        'EMA_21': 'ema21'
-    }
-    df.rename(columns=rename_cols, inplace=True)
-    
-    # Drop BBB_20_2.0 and BBP_20_2.0 columns
-    drop_cols = ['BBB_20_2.0', 'BBP_20_2.0']
-    df.drop(columns=[c for c in drop_cols if c in df.columns], inplace=True)
+    df['price_change_pct']   = df['close'].pct_change()
+    df['high_low_range_pct'] = (df['high'] - df['low']) / df['low']
 
     # STEP 4: NaN/inf safety (order matters)
     df.replace([np.inf, -np.inf], np.nan, inplace=True)

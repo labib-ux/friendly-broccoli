@@ -6,8 +6,8 @@ tensorboard>=2.16.0
 
 # Data & Features
 pandas>=2.2.0
-numpy>=1.26.0
-pandas-ta>=0.3.14b
+numpy>=1.26.0,<2.0.0
+ta>=0.11.0
 
 # Alpaca Markets
 alpaca-py>=0.20.0
