@@ -51,7 +51,7 @@ if __name__ == "__main__":
     if args.mode == "train":
         # STEP 1 — Fetch historical training data
         logger.info("Fetching historical data for training...")
-        df = fetch_historical_data(adapter, "BTC/USD", "1h", limit=2000)
+        df = fetch_historical_data(adapter, "BTC/USD", "1h", limit=5000)
         
         if df.empty:
             logger.critical(
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
         # STEP 5 — Train
         logger.info("Starting training...")
-        agent.train(total_timesteps=100000, reset_num_timesteps=True)
+        agent.train(total_timesteps=500000, reset_num_timesteps=True)
         logger.info("Training complete. Model saved to: %s", MODEL_SAVE_PATH)
         
         # Exit immediately after training completes

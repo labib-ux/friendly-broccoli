@@ -185,7 +185,13 @@ class TradingEnvironment(gym.Env):
             self.trade_count += 1
         else:
             # HOLD (or BUY attempted while in position, or SELL attempted while flat)
-            step_reward = 0.0
+            if self.position_size > 0:
+                unrealized_pnl = (
+                    (current_price - self.entry_price) / self.entry_price
+                )
+                step_reward = unrealized_pnl * 0.01
+            else:
+                step_reward = 0.0
 
         # Portfolio update (runs after every action)
         self.portfolio_value = self.current_capital + (self.position_size * current_price)
